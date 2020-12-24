@@ -1,0 +1,35 @@
+import sympy
+import matplotlib.pyplot as plt
+x = sympy.Symbol('x')
+y = sympy.Symbol('y')
+myDiffEq = str(input("Enter your differential equation (y'=...)  "))
+myInitX = float(input("Enter your inital x point  "))
+myInitY = float(input("Enter you initial y point  "))
+myFinalX = float(input("Enter desired X value   "))
+myStepSize = float(input("Enter your step size  "))
+def EvaluateSlope(DiffEq, X, Y):
+  DiffEq = sympy.sympify(DiffEq)
+  DiffEq = DiffEq.subs(x, X)
+  DiffEq = DiffEq.subs(y, Y)
+  return DiffEq
+def FindY(DiffEq, x, y, FinalX, h):
+  global i
+  myXSet = []
+  myYSet = []
+  i=x
+  while (i < FinalX):
+    global deltaY
+    dYdX = (EvaluateSlope(DiffEq, x, y))
+    deltaX = h
+    deltaY = (dYdX)*(deltaX)
+    myXAppend = [x]
+    myXSet.extend(myXAppend)
+    myYAppend = [y]
+    myYSet.extend(myYAppend)
+    y += deltaY
+    x += h
+    i += h
+  print(y)
+  plt.plot(myXSet, myYSet)
+  plt.show()
+FindY(myDiffEq, myInitX, myInitY, myFinalX, myStepSize)
